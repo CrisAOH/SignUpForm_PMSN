@@ -1,12 +1,30 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pmsn2024/screen/dashboard_screen.dart';
 import 'package:pmsn2024/screen/despensa_screen.dart';
+import 'package:pmsn2024/screen/favourite_movies_screen.dart';
+//import 'package:pmsn2024/screen/detail_movie_screen.dart';
+import 'package:pmsn2024/screen/popular_movies_screen.dart';
+import 'package:pmsn2024/screen/products_firebase_screen.dart';
 import 'package:pmsn2024/screen/signup_screen.dart';
 import 'package:pmsn2024/screen/splash_screen.dart';
 import 'package:pmsn2024/settings/app_value_notifier.dart';
 import 'package:pmsn2024/settings/theme.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey:
+          "AIzaSyD1f9UvD-EjLK3vD2b63c0Qn7eUQfPIs0Q", // paste your api key here
+      appId:
+          "1:608642795156:android:243424e8e5ab23fcee9681", //paste your app id here
+      messagingSenderId: "608642795156", //paste your messagingSenderId here
+      projectId: "pmsn2024-8ce59", //paste your project id here
+    ),
+  );
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,21 +33,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: AppValueNotifier.banTheme,
-        builder: (context, value, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: value
-                ? ThemeApp.darkTheme(context)
-                : ThemeApp.lightTheme(context),
-            home: SplashScreen(),
-            routes: {
-              "/dash": (BuildContext context) => DashboardScreen(),
-              "/despensa": (BuildContext context) => DespensaScreen(),
-              "/signup": (BuildContext context) => SignupScreen(),
-            },
-          );
-        });
+      valueListenable: AppValueNotifier.banTheme,
+      builder: (context, value, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: value
+              ? ThemeApp.darkTheme(context)
+              : ThemeApp.lightTheme(context),
+          home: SplashScreen(),
+          routes: {
+            "/dash": (BuildContext context) => const DashboardScreen(),
+            "/despensa": (BuildContext context) => const DespensaScreen(),
+            "/signup": (BuildContext context) => SignupScreen(),
+            "/movies": (BuildContext context) => const PopularMoviesScreen(),
+            //"/detail": (BuildContext context) => const DetailMovieScreen(),
+            "/productsFirebase": (BuildContext context) =>
+                const ProductsFirebaseScreen(),
+            "/favourites": (BuildContext context) =>
+                const FavouriteMoviesScreen(),
+          },
+        );
+      },
+    );
   }
 }
   //     title: 'Flutter Demo',

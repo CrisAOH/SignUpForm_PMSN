@@ -33,6 +33,27 @@ class DashboardScreen extends StatelessWidget {
               onTap: () => Navigator.pushNamed(context, '/despensa'),
             ),
             ListTile(
+              leading: Icon(Icons.shop),
+              title: Text('Despensa Firebase'),
+              subtitle: Text('Relación de productos que no voy a usar.'),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () => Navigator.pushNamed(context, '/productsFirebase'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.movie),
+              title: const Text('Movies App'),
+              subtitle: const Text('Consulta de peliculas populares'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.pushNamed(context, '/movies'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.movie),
+              title: const Text('Movies App'),
+              subtitle: const Text('Consulta de peliculas favoritas'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.pushNamed(context, '/favourites'),
+            ),
+            ListTile(
               leading: Icon(Icons.close),
               title: Text('Salir'),
               subtitle: Text('Hasta luego'),

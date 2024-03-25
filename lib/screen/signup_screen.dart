@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pmsn2024/services/email_auth_firebase.dart';
 
 class SignupScreen extends StatefulWidget {
   SignupScreen({super.key});
@@ -12,6 +13,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
+  final authFirebase = EmailAuthFirebase();
   File? image;
   final picker = ImagePicker();
 
@@ -354,10 +356,23 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('¡Formulario válido!'),
-                                ),
+                              authFirebase
+                                  .signUpUser(
+                                name: conName.text,
+                                password: conPwd.text,
+                                email: conEmail.text,
+                              )
+                                  .then(
+                                (value) {
+                                  if (value) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content:
+                                            Text('Se registró el usuario.'),
+                                      ),
+                                    );
+                                  }
+                                },
                               );
                             }
                           },
